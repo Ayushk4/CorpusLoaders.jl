@@ -28,3 +28,7 @@ end
     ner_tags = CorpusLoaders.named_entity.(words)
     @test typeof(plain_words) <: Vector{String}
 end
+
+@testset "Conll 2000" begin
+    datadep"CoNLL 2000"
+end

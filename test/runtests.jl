@@ -2,9 +2,9 @@ using Test
 using CorpusLoaders
 
 files = ["types",
+         "CoNLL",
          "SemCor",
          "Senseval3",
-         "CoNLL",
          "wikicorpus"
         ]
 
