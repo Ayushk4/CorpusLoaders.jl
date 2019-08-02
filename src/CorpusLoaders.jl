@@ -22,6 +22,8 @@ function __init__()
     include(joinpath(@__DIR__, "IMDB_DataDeps.jl"))
     include(joinpath(@__DIR__, "Twitter_DataDeps.jl"))
     include(joinpath(@__DIR__, "StanfordSentimentTreebank_DataDeps.jl"))
+    include(joinpath(@__DIR__, "GMB_DataDeps.jl"))
+
 end
 
 include("types.jl")
