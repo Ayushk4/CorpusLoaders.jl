@@ -6,7 +6,7 @@ for (ver, ) in [("1.0.0",),
             ("2.1.0",),
             ("2.2.0",)]
 
-    register(DataDep("Groningen Meaning Bank $ver",
+    register(DataDep("gmb-$ver",
         """
         Website: https://gmb.let.rug.nl/about.php
         Data_Website: https://gmb.let.rug.nl/data.php
@@ -26,6 +26,15 @@ for (ver, ) in [("1.0.0",),
             # Move everything to current directory, under same name
             mv.(joinpath.(innerdir, innerfiles), innerfiles)
             rm(innerdir, recursive=true)
+
+            for file in innerfiles
+                path = joinpath("gmb-$ver", file)
+                docs = readdir(path)
+                for doc in docs
+                    doc_path = joinpath(path, doc)
+
+                end
+            end
         end
     ))
 end
