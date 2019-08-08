@@ -94,7 +94,7 @@ struct GMBWord <: TaggedWord
     pos::String
     word::String
     function GMBWord(ner_tag, pos, word)
-        new(intern(ner_tag), intern(pos) intern(word))
+        new(intern(ner_tag), intern(pos), intern(word))
     end
 end
 

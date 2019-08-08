@@ -21,41 +21,44 @@ MultiResolutionIterators.levelname_map(::Type{GMB}) = [
     :char=>4, :character=>4
     ]
 
-function parse_gmbfile(line)
-	println(line)
+function parse_gmb_word(line)
+	tokens_tags = split(line)
+	length(tokens_tags) != 5 && throw("Error parsing line: \"$line\". Invalid Format.")
+	return GMBWord(tokens_tags[5], tokens_tags[2], tokens_tags[1])
 end
 
 function parse_gmbfile(filename)
     local sent
-    lines = @NestedVector(TaggedWord,2)()
-    context = Document(intern(basename(filename)), lines)
+    sentences = @NestedVector(GMBWord,2)()
+    context = Document(intern(basename(filename)), sentences)
 
     # structure
 
-    function new_sentence(line)
-        sent = @NestedVector(TaggedWord,1)()
-        push!(lines, sent)
+    function new_sentence()
+        sent = @NestedVector(GMBWord,1)()
+        push!(sentences, sent)
     end
 
 	get_tagged(line) = push!(sent, parse_gmb_word(line))
 
+	new_sentence()
+
 	# parse
 	for line in eachline(filename)
 		if length(line) == 0 || isspace(line[1])
-			new_sentence()
+			length(sent) == 0 || new_sentence()
 		else
 			get_tagged(line)
 		end
 	end
-	apply_subparsers(filename, subparsers)
-
+	isempty(sentences[end]) && deleteat!(sentences, lastindex(sentences))
     return context
 end
 
-function load(corpus::Senseval3, doc_buffersize=16)
-    Channel(;ctype=Document{@NestedVector(TaggedWord, 2), String}, csize=doc_buffersize) do ch
+function load(corpus::GMB, doc_buffersize=16)
+    Channel(;ctype=Document{@NestedVector(GMBWord, 2), String}, csize=doc_buffersize) do ch
         for fn in corpus.filepaths
-            doc = parse_senseval3file(fn)
+            doc = parse_gmbfile(fn)
             put!(ch, doc)
         end
     end

@@ -11,7 +11,7 @@ export Document, TaggedWord, SenseAnnotatedWord, PosTaggedWord, CoNLL2003TaggedW
 export title, sensekey, word
 export load
 
-export WikiCorpus, SemCor, Senseval3, CoNLL, IMDB, Twitter, StanfordSentimentTreebank
+export WikiCorpus, SemCor, Senseval3, CoNLL, IMDB, Twitter, StanfordSentimentTreebank, GMB
 
 function __init__()
     include(joinpath(@__DIR__, "WikiCorpus_DataDeps.jl"))
@@ -36,5 +36,6 @@ include("CoNLL.jl")
 include("IMDB.jl")
 include("Twitter.jl")
 include("StanfordSentimentTreebank.jl")
+include("GMB.jl")
 
 end
